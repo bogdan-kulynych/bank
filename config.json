@@ -3,6 +3,7 @@
     "key": "ssl/server.key",
     "cert": "ssl/server.crt",
     "ca": "ssl/ca.crt",
+    "passphrase": "password",
     "requestCert": true,
     "rejectUnauthorized": true
 }
