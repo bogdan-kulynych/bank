@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "description": "The OpenShift `nodejs` cartridge documentation can be found at:",
+  "main": "server.js",
+  "dependencies": {
+    "express": "~3.4.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": "",
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "b385677987a3447cf2259f245aa6def7be897fe5"
+}
