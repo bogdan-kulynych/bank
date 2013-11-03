@@ -1,7 +1,7 @@
 {
-  "name": "server",
+  "name": "bank",
   "version": "0.0.0",
-  "description": "The OpenShift `nodejs` cartridge documentation can be found at:",
+  "description": "",
   "main": "server.js",
   "dependencies": {
     "express": "~3.4.4"
@@ -13,7 +13,6 @@
   },
   "repository": "",
   "author": "",
-  "license": "BSD",
-  "readmeFilename": "README.md",
-  "gitHead": "b385677987a3447cf2259f245aa6def7be897fe5"
+  "license": "MIT",
+  "readmeFilename": "README.md"
 }
