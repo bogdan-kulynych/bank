@@ -16,9 +16,8 @@ Running locally on port `4443`:
 ## Protocol
 
 
-Every client is required to have a key / certificate signed with Bank CA certificate.
-
 Protocol is via HTTPS RESTful API.
+Every client is required to have a key / certificate signed with Bank CA certificate. There are *Toy SSL certificates* for testing purposes in `ssl` directory.
 
 
 ### Greetings
