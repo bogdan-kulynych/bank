@@ -53,7 +53,7 @@ Successful response:
     Content-Type: application/json
 
     {
-        "token": "<unique API token>"
+        "token": "<API session token>"
     }
 
 Unauthorized error
@@ -61,25 +61,43 @@ Unauthorized error
     401 Unauthorized
 
 
-### Balance
+### Balance inquiry
 
 
 Request:
 
     GET /api/balance
-    Authentication: <unique API token>
+    Content-Type: application/json
+
+    {
+        "token": "<API session token>"
+    }
+
+Successful response:
+
+    200 OK
+    Content-Type: application/json
+
+    {
+        "available": "<available funds>",
+        "hold": "<funds on hold>"
+    }
+
+Unauthorized error:
+
+    401 Unauthorized
 
 
-### Withdraw
+### Money withdrawal
 
 
 Request:
 
     POST /api/withdraw
-    Authentication: <unique API token>
     Content-Type: application/json
 
     {
+        "token": "<API session token>",
         "amount": <Amount to withdraw>
     }
 
@@ -91,7 +109,7 @@ Unauthorized error:
 
     401 Unauthorized
 
-Funds not sufficient
+Not sufficient funds:
 
-    403
+    403 Forbidden
 
