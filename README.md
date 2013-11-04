@@ -39,7 +39,7 @@ Response:
 
 Request:
 
-    POST /api/auth
+    GET /api/auth
     Content-Type: application/json
 
     {
@@ -56,12 +56,42 @@ Successful response:
         "token": "<unique API token>"
     }
 
-Failed response:
+Unauthorized error
 
     401 Unauthorized
 
 
-### Actions
+### Balance
+
+
+Request:
 
     GET /api/balance
     Authentication: <unique API token>
+
+
+### Withdraw
+
+
+Request:
+
+    POST /api/withdraw
+    Authentication: <unique API token>
+    Content-Type: application/json
+
+    {
+        "amount": <Amount to withdraw>
+    }
+
+Successful response:
+
+    200 OK
+
+Unauthorized error:
+
+    401 Unauthorized
+
+Funds not sufficient
+
+    403
+
