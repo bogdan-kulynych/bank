@@ -2,63 +2,37 @@
  * Bank subsystem
  * Author: Bogdan Kulynych
  *
- * Main communication router
+ * Server bootstraping
  */
 
 
-var fs      = require('fs'),
-    https   = require('https'),
-    express = require('express'),
+var https = require('https'),
 
-    ssl     = require('./config/ssl.json');
-    utils   = require('./utils.js');
+    api   = require('./api/router.js'),
+    utils = require('./api/utils.js'),
+
+    SSL_CONFIG_FILE = require('./config/ssl.json');
 
 
 // CONFIGURATION
 
 
-var options = {};
+SSL_CONFIG = utils.processSslConfig(SSL_CONFIG_FILE);
 
-// Port
-options.port = process.argv[2] || 4443;
-
-// SSL Keys and Certificates
-['key', 'cert', 'ca'].map(function(name) {
-    if (name in ssl) {
-        ssl[name] = fs.readFileSync(ssl[name]);
-    }
-});
+var options = {
+    'port': 4443
+};
 
 
-// API SERVER
+// HTTPS SERVER
 
 
-var api = module.exports = express();
-
-api.use(express.json());
-api.disable('x-powered-by');
-
-// Index
-api.get('/api', function(req, res) {
-    res.send(200);
-});
-
-// Authentication
-api.get('/api/auth', function(req, res) {
-    res.send(501);
-});
-
-// Balance
-api.get('/api/balance', function(req, res) {
-    res.send(501);
-});
-
-
-var server = https.createServer(ssl, api)
+var server = https.createServer(SSL_CONFIG, api)
     .listen(options.port, function() {
         console.log('Server is up and running on port ' + options.port);
      });
 
+// Request logging
 server.on('request', function(req) {
     console.log('[' + utils.getDateTime() + '] Incoming request:',
         req.ip, req.method, req.url);
