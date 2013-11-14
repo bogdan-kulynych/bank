@@ -11,7 +11,7 @@ var https = require('https'),
     api   = require('./api/router.js'),
     utils = require('./api/utils.js'),
 
-    SSL_CONFIG_FILE = require('./config/ssl.json');
+    SSL_CONFIG_FILE = require('./api/config/ssl.json');
 
 
 // CONFIGURATION
