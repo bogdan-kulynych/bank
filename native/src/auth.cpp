@@ -5,17 +5,21 @@
  * Authentication
  */
 
-#include "db.h"
+// #include "db.h"
 #include "auth.h"
 #include "config.h"
 
 #include "utils/base64.h"
 using namespace utils;
 
+#include <iostream>
+
 #include <string>
 #include <sstream>
-#include <ctime>
 #include <stdexcept>
+#include <regex>
+#include <cassert>
+#include <ctime>
 
 #include <openssl/hmac.h>
 
@@ -50,7 +54,10 @@ hmac(const std::string& card_id, time_t timestamp)
 
 struct Token
 {
-    Token(const std::string& card_id, time_t timestamp=std::time(0));
+    Token(const std::string& card_id,
+          time_t timestamp,
+          const std::string& mac);
+    explicit Token(const std::string& stringified);
     ~Token() {};
 
     const std::string card_id;
@@ -59,12 +66,37 @@ struct Token
 };
 
 
-Token::Token(const std::string& _card_id, time_t _timestamp):
+Token::Token(const std::string& _card_id,
+             time_t _timestamp,
+             const std::string& _mac):
     card_id(_card_id),
     timestamp(_timestamp),
-    mac(hmac(_card_id, _timestamp))
+    mac(_mac)
 {
     return;
+};
+
+
+Token parse(const std::string& stringified)
+{
+    assert (stringified.length() <= 100);
+
+    std::istringstream ss(stringified);
+    char delimiter = config::auth::TOKEN_DELIMITER;
+
+    std::string card_id;
+    std::getline(ss, card_id, delimiter);
+
+    std::string raw_timestamp;
+    std::getline(ss, raw_timestamp, delimiter);
+    std::stringstream ss1; ss1 << raw_timestamp;
+    time_t timestamp;
+    ss1 >> timestamp;
+
+    std::string mac;
+    std::getline(ss, mac, delimiter);
+
+    return Token(card_id, timestamp, mac);
 };
 
 
@@ -78,17 +110,15 @@ std::string stringify(const Token& token)
 };
 
 
-// TODO
-Token* parse(const std::string& stringified)
+bool auth::verify_token(const std::string& stringified)
 {
-    return nullptr;
-};
-
-
-// TODO
-bool auth::verify_token(const std::string& token)
-{
-    return true;
+    bool result = false;
+    Token token = parse(stringified);
+    bool fresh = std::time(0) - token.timestamp <= config::auth::TOKEN_STALE_TIMEOUT;
+    if (token.mac == hmac(token.card_id, token.timestamp) && fresh) {
+        result = true;
+    }
+    return result;
 }
 
 
@@ -96,9 +126,11 @@ std::string*
 auth::issue_token(const std::string& card_id, const std::string& pin)
 {
     std::string* result = nullptr;
-    if (db::verify_credentials(card_id, pin)) {
+    // if (db::verify_credentials(card_id, pin)) {
+    if (true) {
         try {
-            Token token(card_id, std::time(0));
+            time_t timestamp = std::time(0);
+            Token token(card_id, timestamp, hmac(card_id, timestamp));
             result = new std::string(stringify(token));
         } catch (std::length_error& err) {}
     }
