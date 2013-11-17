@@ -20,7 +20,7 @@ Protocol is via HTTPS RESTful API.
 Every client is required to have a key / certificate signed with Bank CA certificate. There are *Toy SSL certificates* for testing purposes in `ssl` directory.
 
 
-### Greetings
+### Greeting
 
 
 Request:
@@ -38,7 +38,7 @@ Response:
 
 Request:
 
-    GET /api/auth
+    POST /api/auth
     Content-Type: application/json
 
     {
@@ -59,18 +59,18 @@ Unauthorized error
 
     401 Unauthorized
 
+Malformed request
+
+    400 Bad request
+
 
 ### Balance inquiry
 
 
 Request:
 
-    GET /api/balance
+    GET /api/balance?token=<API session token>
     Content-Type: application/json
-
-    {
-        "token": "<API session token>"
-    }
 
 Successful response:
 
@@ -82,7 +82,7 @@ Successful response:
         "hold": "<funds on hold>"
     }
 
-Unauthorized error:
+Bad or stale token (re-authentication needed):
 
     401 Unauthorized
 
@@ -92,17 +92,45 @@ Unauthorized error:
 
 Request:
 
-    POST /api/withdraw
+    POST /api/withdraw?token=<API session token>
     Content-Type: application/json
 
     {
-        "token": "<API session token>",
         "amount": <Amount to withdraw>
     }
 
 Successful response:
 
     200 OK
+
+Bad or stale token (re-authentication needed):
+
+    401 Unauthorized
+
+Not sufficient funds:
+
+    403 Forbidden
+
+
+### Periodic transfer
+
+
+Request:
+
+    POST /api/transfer?token=<API session token>
+    Content-Type: application/json
+
+    {
+        "receiver": "<Reciever card id>",
+        "amount": "<Amount to transfer>",
+        "start_date": "<Start date>",
+        "frequency": "weekly|monthly|quarterly|yearly"
+    }
+
+Successful response:
+
+    200 OK
+    Content-Type: application/json
 
 Unauthorized error:
 
@@ -111,4 +139,3 @@ Unauthorized error:
 Not sufficient funds:
 
     403 Forbidden
-

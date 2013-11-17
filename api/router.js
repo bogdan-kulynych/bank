@@ -7,7 +7,7 @@
 
 
 var express = require('express');
-//    bank = require('../lib/build/bank');
+    bank = require('../native/build/Release/bank.node');
 
 
 // OPTIONS
@@ -28,20 +28,23 @@ api.get('/api', function(req, res) {
 });
 
 // Authentication
-api.get('/api/auth', function(req, res) {
-/*
-    var card = req.body['card'],
-        pin = req.body['pin'];
+api.post('/api/auth', function(req, res) {
+    var card = req.body["card"],
+        pin = req.body["pin"];
 
-    bank.requestAuthToken(card, pin, function(err, token) {
-        if (err) {
-            res.send(401);
-        } else {
-            res.send(JSON.stringify("token": token));
-        }
-    });
-*/
-    res.send(501);
+    console.log(req.body);
+    var token;
+    try {
+        token = bank.requestAuthToken(card, pin);
+    } catch (e) {
+        res.send(400);
+    }
+
+    if (!token) {
+        res.send(401);
+    } else {
+        res.send(200, JSON.stringify({"token": token}));
+    }
 });
 
 // Balance
