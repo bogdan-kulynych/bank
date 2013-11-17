@@ -6,8 +6,7 @@ Bank API Server
 
 
 Requires `node.js v0.10.x`.
-
-Running locally on port `4443`:
+First, [build native layer](native/README.md). Then you can run server on port 4443:
 
     npm install
     node server.json 4443
@@ -130,7 +129,6 @@ Request:
 Successful response:
 
     200 OK
-    Content-Type: application/json
 
 Unauthorized error:
 

@@ -16,6 +16,8 @@ C++11-compatible compiler is needed.
 
 ### Building
 
+Prior to building, secrets have to be changed in `config/config.h`. Then, to build with GYP:
+
     cd native
     node-gyp build
 
