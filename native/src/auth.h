@@ -17,7 +17,10 @@
 
 namespace auth
 {
-    void verify_token(const std::string& token);
+    // Throws exception if token is invalid, otherwise returns card id
+    std::string verify_token(const std::string& token);
+
+    // Returns a token for specified card id and pin, if invalid, throws exception
     std::string issue_token(const std::string& card_id, const std::string& pin);
 
     // Exceptions

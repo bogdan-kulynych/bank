@@ -35,6 +35,10 @@
             "sources": [
                 "src/auth.h",
                 "src/auth.cpp",
+                "src/db.h",
+                "src/db.cpp",
+                "src/transactions.h",
+                "src/transactions.cpp",
                 "src/utils/base64.h",
                 "src/utils/base64.cpp"
             ],

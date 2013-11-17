@@ -134,7 +134,8 @@ struct auth::bad_signature: exception
 };
 
 
-void auth::verify_token(const string& stringified)
+string
+auth::verify_token(const string& stringified)
 {
     Token token = parse(stringified);
     time_t dtime = time(0) - token.timestamp;
@@ -145,6 +146,8 @@ void auth::verify_token(const string& stringified)
     } else if (token.mac != hmac(token.card_id, token.timestamp)) {
         throw bad_signature();
     }
+
+    return token.card_id;
 }
 
 
