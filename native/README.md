@@ -4,12 +4,20 @@ Bank native layer
 
 ### Prerequisites
 
-C++11-compatible compiler is needed. Dependencies
+Runtime dependencies:
 
     libssl-dev
 
-### Build
+Dev dependencies:
 
-    mkdir build && cd build
-    cmake ..
-    make
+    npm install node-gyp -g
+
+C++11-compatible compiler is needed.
+
+### Building
+
+    cd native
+    node-gyp build
+
+Built version will be in `native/build/Release`
+
