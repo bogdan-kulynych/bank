@@ -11,6 +11,7 @@
 
 #include <string>
 
+
 namespace transactions
 {
     struct Balance {

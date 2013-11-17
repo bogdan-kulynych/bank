@@ -2,11 +2,19 @@ Bank API Server
 ---------------
 
 
-## Running
+## Deploying
 
 
-Requires `node.js v0.10.x`.
-First, [build native layer](native/README.md). Then you can run server on port 4443:
+### Requirements
+
+
+    node@0.10.x
+
+### Building and running
+
+1. [Build native layer](native/README.md).
+2. Configure SSL in `api/config/ssl.json`.
+3. Run the server specifying a port:
 
     npm install
     node server.json 4443
@@ -15,8 +23,7 @@ First, [build native layer](native/README.md). Then you can run server on port 4
 ## Protocol
 
 
-Protocol is via HTTPS RESTful API.
-Every client is required to have a key / certificate signed with Bank CA certificate. There are *Toy SSL certificates* for testing purposes in `ssl` directory.
+It's a RESTful API via HTTPS. Every client is required to have a key / certificate signed with Bank CA certificate. There are *sample SSL certificates* for testing purposes in `ssl` directory.
 
 
 ### Greeting
@@ -33,6 +40,9 @@ Response:
 
 
 ### Authentication
+
+
+In order to use an API, user has to obtain an authentication token, and supply it on every request that requires authorization. Token contains card id, issue time, and server's digital signature: `<card id>:<unix timestamp>:<base64-encoded digital signature>`. Token is valid within 3 minutes after being issued.
 
 
 Request:
@@ -69,7 +79,6 @@ Malformed request
 Request:
 
     GET /api/balance?token=<API session token>
-    Content-Type: application/json
 
 Successful response:
 

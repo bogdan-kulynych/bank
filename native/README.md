@@ -4,13 +4,13 @@ Bank native layer
 
 ### Prerequisites
 
-Runtime dependencies:
+C++ dependencies:
 
     libssl-dev
 
-Dev dependencies:
+Global node.js dependencies:
 
-    npm install node-gyp -g
+    node-gyp
 
 C++11-compatible compiler is needed.
 

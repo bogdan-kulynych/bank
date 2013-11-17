@@ -5,8 +5,8 @@
 using namespace v8;
 
 
-// Throws exception when malformed arguments list
-// Returns a string with token if credentials verified or null otherwise
+// Returns a string with token if credentials are valid, null otherwise
+// Throws exception when argument list malformed
 Handle<Value> RequestAuthToken(const Arguments& args) {
     HandleScope scope;
 
@@ -38,6 +38,8 @@ Handle<Value> RequestAuthToken(const Arguments& args) {
 };
 
 
+// Returns an object with funds if token is valid, empty object otherwise
+// Throws exception when argument list malformed
 Handle<Value> BalanceInquiry(const Arguments& args) {
     HandleScope scope;
 

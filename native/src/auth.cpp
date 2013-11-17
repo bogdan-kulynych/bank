@@ -5,6 +5,7 @@
  * Authentication
  */
 
+
 #include "db.h"
 #include "auth.h"
 #include "config.h"
@@ -25,8 +26,7 @@ using namespace std;
 
 
 // Wrapper for OpenSSL HMAC
-string
-hmac(const string& card_id, time_t timestamp)
+string hmac(const string& card_id, time_t timestamp)
 {
     // Concatenating card_id and timestamp
     stringstream ss;
@@ -134,8 +134,7 @@ struct auth::bad_signature: exception
 };
 
 
-string
-auth::verify_token(const string& stringified)
+string auth::process_token(const string& stringified)
 {
     Token token = parse(stringified);
     time_t dtime = time(0) - token.timestamp;
@@ -151,8 +150,7 @@ auth::verify_token(const string& stringified)
 }
 
 
-string
-auth::issue_token(const string& card_id, const string& pin)
+string auth::issue_token(const string& card_id, const string& pin)
 {
     db::verify_credentials(card_id, pin);
     time_t timestamp = time(0);

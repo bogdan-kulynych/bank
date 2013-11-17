@@ -3,8 +3,8 @@
  * Author: Bogdan Kulynych
  *
  * Authentication
- * Functions to issue and verify auth tokens. Auth token is a tuple
- * (<card id>, <timestamp>, <MAC>) used as digital signature to
+ * Functions to issue and verify auth tokens. Auth token is a string
+ * `<card id>:<timestamp>:<MAC>` used as digital signature to
  * authenticate user session.
  */
 
@@ -17,11 +17,14 @@
 
 namespace auth
 {
-    // Throws exception if token is invalid, otherwise returns card id
-    std::string verify_token(const std::string& token);
+    // Returns card id if token is valid, otherwise throws exception
+    std::string
+    process_token(const std::string& token);
 
-    // Returns a token for specified card id and pin, if invalid, throws exception
-    std::string issue_token(const std::string& card_id, const std::string& pin);
+    // Returns an auth token if credentials are valid, otherwise
+    // throws exception
+    std::string
+    issue_token(const std::string& card_id, const std::string& pin);
 
     // Exceptions
     struct stale_token;

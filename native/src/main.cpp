@@ -1,3 +1,12 @@
+/**
+ * Bank subsystem
+ * Author: Bogdan Kulynych
+ *
+ * Demo
+ *
+ */
+
+
 #include "auth.h"
 #include "transactions.h"
 
@@ -7,7 +16,7 @@ using namespace std;
 
 void verify(string& s) {
     try {
-        auth::verify_token(s);
+        auth::process_token(s);
         cout << "Token OK" << endl;
     } catch (exception& err) {
         cout << "Token NOT OK: " << err.what() << endl;

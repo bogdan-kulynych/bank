@@ -25,7 +25,7 @@ transactions::Balance::Balance(double _available, double _hold):
 transactions::Balance
 transactions::balance_inquiry(const std::string& token)
 {
-    std::string card_id = auth::verify_token(token);
+    std::string card_id = auth::process_token(token);
     double available = db::get_available_funds(card_id);
     double hold = db::get_on_hold_funds(card_id);
     return Balance(available, hold);

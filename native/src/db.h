@@ -14,7 +14,12 @@
 
 namespace db
 {
-    bool verify_credentials(const std::string& card_id, const std::string& pin);
-    double get_available_funds(const std::string& card_id);
-    double get_on_hold_funds(const std::string& card_id);
+    bool
+    verify_credentials(const std::string& card_id, const std::string& pin);
+
+    double
+    get_available_funds(const std::string& card_id);
+
+    double
+    get_on_hold_funds(const std::string& card_id);
 }
