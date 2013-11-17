@@ -6,7 +6,9 @@
  */
 
 
-var express = require('express');
+var express = require('express'),
+
+    utils = require('./utils'),
     bank = require('../native/build/Release/bank.node');
 
 
@@ -32,7 +34,6 @@ api.post('/api/auth', function(req, res) {
     var card = req.body["card"],
         pin = req.body["pin"];
 
-    console.log(req.body);
     var token;
     try {
         token = bank.requestAuthToken(card, pin);
@@ -49,5 +50,19 @@ api.post('/api/auth', function(req, res) {
 
 // Balance
 api.get('/api/balance', function(req, res) {
-    res.send(501);
+    var token = req.query.token;
+
+    var balance;
+    try {
+        balance = bank.balanceInquiry(token);
+    } catch (e) {
+        console.warn(e);
+        res.send(400);
+    }
+
+    if (utils.emptyObject(balance)) {
+        res.send(401);
+    } else {
+        res.send(200, JSON.stringify(balance))
+    }
 });

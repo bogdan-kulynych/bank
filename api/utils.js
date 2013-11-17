@@ -8,6 +8,13 @@
 
 var fs = require('fs');
 
+function emptyObject(obj) {
+    for (var prop in obj) {
+        return false;
+    }
+    return true;
+}
+
 function processSslConfig(config) {
     // SSL Keys and Certificates
     ['key', 'cert', 'ca'].map(function(name) {
@@ -36,6 +43,7 @@ function getDateTime() {
 };
 
 module.exports = {
+    'emptyObject': emptyObject,
     'processSslConfig': processSslConfig,
     'getDateTime': getDateTime
 };
