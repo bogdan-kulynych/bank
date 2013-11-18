@@ -2,9 +2,11 @@ Bank native layer
 -----------------
 
 
+## Building
+
 ### Prerequisites
 
-C++ dependencies:
+Clang 3.2 is used to compile library. To use another compiler, change `binding.gyp` `varibles` section appropriately. C++ dependencies:
 
     libssl-dev
 
@@ -12,14 +14,13 @@ Global node.js dependencies:
 
     node-gyp
 
-C++11-compatible compiler is needed.
 
-### Building
+### Configuring and building
 
-Prior to building, secrets have to be changed in `config/config.h`. Then, to build with GYP run:
+1. Change secrets in `config/config.h`
+2. Build library with GYP:
 
-    cd /path/to/server
-    bin/build
+        cd /path/to/server
+        bin/build
 
-Built version will be in `native/build/Release`
-
+Built version will be in `build/Release`

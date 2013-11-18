@@ -7,17 +7,16 @@ Bank API Server
 
 ### Requirements
 
-
     node@0.10.x
 
-### Building and running
+### Configuring and building
 
-1. [Build native layer](native/README.md).
-2. Configure SSL in `api/config/ssl.json`.
+1. [Build native layer](native/README.md) or get `bank.node` binaries
+2. Configure SSL in `api/config/ssl.json`
 3. Run the server specifying a port:
 
-    npm install
-    node server.json 4443
+        npm install
+        node server.json 4443
 
 
 ## Protocol
