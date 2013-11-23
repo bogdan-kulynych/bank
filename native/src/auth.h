@@ -17,16 +17,20 @@
 
 namespace auth
 {
-    // Returns card id if token is valid, otherwise throws exception
+    // Returns card id if token is valid, otherwise throws auth exception
+    // Does not verify if card id itself is valid, use db::exists
     std::string
     process_token(const std::string& token);
 
     // Returns an auth token if credentials are valid, otherwise
-    // throws exception
+    // throws db exception
     std::string
     issue_token(const std::string& card_id, const std::string& pin);
 
     // Exceptions
+    struct exception : public std::exception {};
+
+    struct invalid_credentials;
     struct stale_token;
     struct invalid_timestamp;
     struct bad_signature;

@@ -110,7 +110,7 @@ string stringify(const Token& token)
 };
 
 
-struct auth::stale_token: exception
+struct auth::stale_token: auth::exception
 {
     virtual const char* what() const noexcept {
         return "Stale token";
@@ -118,7 +118,7 @@ struct auth::stale_token: exception
 };
 
 
-struct auth::invalid_timestamp: exception
+struct auth::invalid_timestamp: auth::exception
 {
     virtual const char* what() const noexcept {
         return "Invalid timestamp";
@@ -126,10 +126,18 @@ struct auth::invalid_timestamp: exception
 };
 
 
-struct auth::bad_signature: exception
+struct auth::bad_signature: auth::exception
 {
     virtual const char* what() const noexcept {
         return "Bad signature";
+    }
+};
+
+
+struct auth::invalid_credentials: auth::exception
+{
+    virtual const char* what() const noexcept {
+        return "Invalid credentials";
     }
 };
 
@@ -152,7 +160,9 @@ string auth::process_token(const string& stringified)
 
 string auth::issue_token(const string& card_id, const string& pin)
 {
-    db::verify_credentials(card_id, pin);
+    if (!db::verify_credentials(card_id, pin)) {
+
+    }
     time_t timestamp = time(0);
     Token token(card_id, timestamp, hmac(card_id, timestamp));
     return stringify(token);
