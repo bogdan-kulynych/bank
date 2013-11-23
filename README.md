@@ -119,6 +119,32 @@ Not sufficient funds:
     403 Forbidden
 
 
+### Transfer
+
+
+Request:
+
+    POST /api/transfer?token=<API session token>
+    Content-Type: application/json
+
+    {
+        "receiver": "<Reciever card id>",
+        "amount": "<Amount to transfer>",
+    }
+
+Successful response:
+
+    200 OK
+
+Unauthorized error:
+
+    401 Unauthorized
+
+Not sufficient funds:
+
+    403 Forbidden
+
+
 ### Periodic transfer
 
 
