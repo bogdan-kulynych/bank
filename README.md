@@ -128,7 +128,7 @@ Request:
     Content-Type: application/json
 
     {
-        "receiver": "<Reciever card id>",
+        "recepient": "<Recepient card id>",
         "amount": "<Amount to transfer>",
     }
 
