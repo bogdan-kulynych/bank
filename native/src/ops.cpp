@@ -55,3 +55,12 @@ string ops::name_request(const string& token,
     auth::process_token(token);
     return db::get_name(card_id);
 }
+
+
+void ops::set_overflow_recepient(const string& token,
+    const string& recepient_id,
+    double threshold)
+{
+    string card_id = auth::process_token(token);
+    db::set_overflow_recepient(card_id, recepient_id, threshold);
+}

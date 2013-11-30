@@ -101,6 +101,7 @@ api.post('/api/withdraw', function(req, res) {
 // Transfer
 api.post('/api/transfer', function(req, res) {
     var token = req.query.token,
+
         recepient_id = req.body['recepient'],
         amount = req.body['amount'];
 

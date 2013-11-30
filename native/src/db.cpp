@@ -86,3 +86,23 @@ double db::get_on_hold_funds(const std::string& card_id)
 {
     return 9000;
 }
+
+
+void
+db::set_overflow_recepient(const std::string sender_id,
+    const std::string recepient_id,
+    double threshold)
+{
+    if (threshold < 0) {
+        throw invalid_amount();
+
+    } else if (!exists(sender_id)) {
+        throw card_does_not_exist();
+
+    } else if (!exists(recepient_id)) {
+        throw recepient_does_not_exist();
+
+    } else {
+
+    }
+}

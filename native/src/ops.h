@@ -36,4 +36,9 @@ namespace ops
     // Gets name of card_id cardholder. Can throw auth or db exception
     std::string name_request(const std::string& token,
         const std::string& card_id);
+
+    //
+    void set_overflow_recepient(const std::string& token,
+        const std::string& recepient_id,
+        double threshold);
 }

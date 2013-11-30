@@ -39,6 +39,11 @@ namespace db
     double
     get_on_hold_funds(const std::string& card_id);
 
+    void
+    set_overflow_recepient(const std::string sender_id,
+        const std::string recepient_id,
+        double threshold);
+
     // Exceptions
 
     struct exception: std::exception {};
