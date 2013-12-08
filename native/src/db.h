@@ -2,7 +2,7 @@
  * Bank subsystem
  * Author: Bogdan Kulynych
  *
- * Database manager
+ * Database calls
  *
  */
 
@@ -39,14 +39,32 @@ namespace db
     double
     get_on_hold_funds(const std::string& card_id);
 
+    double
+    get_overflow_threshold(const std::string card_id);
+
+    std::string
+    get_overflow_recepient(const std::string card_id);
+
     void
-    set_overflow_recepient(const std::string sender_id,
-        const std::string recepient_id,
-        double threshold);
+    set_overflow_threshold(const std::string card_id, const double threshold);
+
+    void
+    set_overflow_recepient(const std::string card_id, const std::string recepient_id);
 
     // Exceptions
 
     struct exception: std::exception {};
+
+    struct database_error : exception 
+    {
+        const char* _msg;
+
+        database_error(const char* msg): _msg(msg) {};
+
+        virtual const char* what() const noexcept {
+            return _msg;
+        }   
+    };
 
     struct insufficient_funds : exception
     {
@@ -73,6 +91,13 @@ namespace db
     {
         virtual const char* what() const noexcept {
             return "Card does not exist";
+        }
+    };
+
+    struct conflict_supplementary_account : exception
+    {
+        virtual const char* what() const noexcept {
+            return "Adding supplementary account creates conflict situation";
         }
     };
 }

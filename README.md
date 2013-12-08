@@ -129,7 +129,7 @@ Request:
 
     {
         "recepient": "<Recepient card id>",
-        "amount": "<Amount to transfer>",
+        "amount": "<Amount to transfer>"
     }
 
 Successful response:
@@ -145,29 +145,38 @@ Not sufficient funds:
     403 Forbidden
 
 
-### Periodic transfer
+### Overflow
 
+Get:
 
-Request:
+    GET /api/overflow?token=<API session token>
+    Content-Type: application/json
 
-    POST /api/transfer?token=<API session token>
+Successful response:
+
+    200 OK
     Content-Type: application/json
 
     {
-        "receiver": "<Reciever card id>",
-        "amount": "<Amount to transfer>",
-        "start_date": "<Start date>",
-        "frequency": "weekly|monthly|quarterly|yearly"
+        "recepient": "<Recepient card id>",
+        "threshold": "<Threshold>"
     }
-
-Successful response:
-
-    200 OK
 
 Unauthorized error:
 
     401 Unauthorized
 
-Not sufficient funds:
 
-    403 Forbidden
+Set:
+
+    POST /api/overflow?token=<API session token>
+    Content-Type: application/json
+
+    {
+        "recepient": "<Recepient card id>",
+        "threshold": "<Threshold>"
+    }
+
+Successful response:
+
+    200 OK

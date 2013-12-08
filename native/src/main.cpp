@@ -72,21 +72,22 @@ int main()
     auto s = auth::issue_token(card_id, pin);
     cout << s << endl;
     verify(s);
+
+    balance(s);
+    transfer(s, "2222222222222222", 100);
     balance(s);
 
-    transfer(s, "1111111111", 100);
-    transfer(s, "1111111111", -100);
-    transfer(s, "1111111111", 0);
-    transfer(s, "1111111111", 100000000000);
+    transfer(s, "2222222222222222", -100);
+    transfer(s, "2222222222222222", 0);
+    transfer(s, "2222222222222222", 100000000000);
 
-    withdraw(s, 100);
+    withdraw(s, 50);
     withdraw(s, 1000000000000);
 
-    get_name(s, "1111111111111111");
-
+    get_name(s, card_id);
 
     // Test if fake tokens fail
-
+    cout << endl << "Fake tokens" << endl << endl;
 
     string fake_token1 = "asdasd01239123askdaskdasd";
     string fake_token2 = "asdasd:asd111asdas:122222222222";

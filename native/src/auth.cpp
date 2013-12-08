@@ -9,6 +9,7 @@
 #include "db.h"
 #include "auth.h"
 #include "config.h"
+using namespace auth;
 
 #include "utils/base64.h"
 using namespace utils;
@@ -110,38 +111,6 @@ string stringify(const Token& token)
 };
 
 
-struct auth::stale_token: auth::exception
-{
-    virtual const char* what() const noexcept {
-        return "Stale token";
-    }
-};
-
-
-struct auth::invalid_timestamp: auth::exception
-{
-    virtual const char* what() const noexcept {
-        return "Invalid timestamp";
-    }
-};
-
-
-struct auth::bad_signature: auth::exception
-{
-    virtual const char* what() const noexcept {
-        return "Bad signature";
-    }
-};
-
-
-struct auth::invalid_credentials: auth::exception
-{
-    virtual const char* what() const noexcept {
-        return "Invalid credentials";
-    }
-};
-
-
 string auth::process_token(const string& stringified)
 {
     Token token = parse(stringified);
@@ -161,7 +130,7 @@ string auth::process_token(const string& stringified)
 string auth::issue_token(const string& card_id, const string& pin)
 {
     if (!db::verify_credentials(card_id, pin)) {
-
+        throw invalid_credentials();
     }
     time_t timestamp = time(0);
     Token token(card_id, timestamp, hmac(card_id, timestamp));

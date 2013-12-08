@@ -37,8 +37,11 @@ namespace ops
     std::string name_request(const std::string& token,
         const std::string& card_id);
 
-    //
-    void set_overflow_recepient(const std::string& token,
-        const std::string& recepient_id,
-        double threshold);
+    // Gets oveflow recepient and threshold
+    std::string get_overflow_recepient(const std::string& token);
+    double get_overflow_threshold(const std::string& token);
+
+    // Sets oveflow recepient and threshold
+    void set_overflow_recepient(const std::string& token, const std::string& recepient_id);
+    void set_overflow_threshold(const std::string& token, const double threshold);
 }

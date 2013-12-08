@@ -40,15 +40,22 @@
                 "src/ops.h",
                 "src/ops.cpp",
                 "src/utils/base64.h",
-                "src/utils/base64.cpp"
+                "src/utils/base64.cpp",
+                "src/utils/hash.h",
+                "src/utils/hash.cpp",
+                "src/db/manager.h",
+                "src/db/manager.cpp",
+                "src/db/account.h",
+                "src/db/account.cpp",
             ],
             "dependencies": [
                 "config"
             ],
             "link_settings": {
                 "libraries": [
+                    "-lssl",
+                    "-lsqlite3",
                     "-lcrypto"
-                    #"-lodb"
                 ]
             },
             'include_dirs': [
@@ -70,7 +77,23 @@
         },
 
         {
-            "target_name": "demo",
+            "target_name": "dbdemo",
+            "type": "executable",
+            "sources": [
+                "src/db/main.cpp"
+            ],
+            "dependencies": [
+                "libbank"
+            ],
+            "cflags": [
+                "-std=c++11",
+            ],
+            'cflags!': ['-fno-exceptions'],
+            'cflags_cc!': ['-fno-exceptions']
+        },
+
+        {
+            "target_name": "libbankdemo",
             "type": "executable",
             "sources": [
                 "src/main.cpp"

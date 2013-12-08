@@ -9,6 +9,7 @@ Bank native layer
 Clang 3.2 is used to compile library. To use another compiler, change `binding.gyp` `varibles` section appropriately. C++ dependencies:
 
     libssl-dev
+    lsqlite3
 
 Global node.js dependencies:
 
@@ -17,10 +18,20 @@ Global node.js dependencies:
 
 ### Configuring and building
 
-1. Change secrets in `config/config.h`
-2. Build library with GYP:
+1. Change parameters in `config/config.h`
+3. Build library with GYP:
 
         cd /path/to/server
         bin/build
 
-Built version will be in `build/Release`
+        # Or
+
+        cd /path/to/server/native
+		node-gyp build
+
+        # Debug
+
+		cd /path/to/server/native
+		node-gyp build --debug
+
+Built version will be in `native/build/Release`

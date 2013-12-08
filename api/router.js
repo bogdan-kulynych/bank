@@ -31,10 +31,12 @@ function handleException(e, res) {
     }
 };
 
+
 // Index
 api.get('/api', function(req, res) {
     res.send(200);
 });
+
 
 // Authentication
 api.post('/api/auth', function(req, res) {
@@ -52,6 +54,7 @@ api.post('/api/auth', function(req, res) {
         handleException(e, res);
     }
 });
+
 
 // Balance
 api.get('/api/balance', function(req, res) {
@@ -112,3 +115,56 @@ api.post('/api/transfer', function(req, res) {
         handleException(e, res);
     }
 });
+
+
+// Get overflow
+api.get('/api/overflow', function(req, res) {
+    var token = req.query.token;
+
+    try {
+        var recepient = bank.getOverflowRecepient(token),
+            threshold = bank.getOverflowThreshold(token);
+        res.send(200, JSON.stringify({
+            "recepient": recepient,
+            "threshold": threshold
+        }));
+    } catch (e) {
+        handleException(e, res);
+    }
+});
+
+
+// Set overflow
+api.post('/api/overflow', function(req, res) {
+    var token = req.query.token,
+
+        recepient = req.body['recepient'],
+        threshold = req.body['threshold'];
+
+    try {
+        if (recepient) {
+            bank.setOverflowRecepient(token, recepient);
+        }
+        if (threshold) {
+            bank.setOverflowThreshold(token, threshold);
+        }
+        res.send(200);
+    } catch (e) {
+        handleException(e, res);
+    }
+});
+
+
+// Clean overflow
+api.del('/api/overflow', function(req, res) {
+    var token = req.query.token;
+
+    try {
+        bank.setOverflowRecepient(token, "");
+        bank.setOverflowThreshold(token, 0);
+        res.send(200);
+    } catch (e) {
+        handleException(e, res);
+    }
+});
+

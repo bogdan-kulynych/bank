@@ -57,10 +57,31 @@ string ops::name_request(const string& token,
 }
 
 
-void ops::set_overflow_recepient(const string& token,
-    const string& recepient_id,
-    double threshold)
+double ops::get_overflow_threshold(const string& token)
 {
     string card_id = auth::process_token(token);
-    db::set_overflow_recepient(card_id, recepient_id, threshold);
+    return db::get_overflow_threshold(card_id);
+}
+
+
+string ops::get_overflow_recepient(const string& token)
+{
+    string card_id = auth::process_token(token);
+    return db::get_overflow_recepient(card_id);
+}
+
+
+void ops::set_overflow_recepient(const string& token,
+    const string& recepient_id)
+{
+    string card_id = auth::process_token(token);
+    db::set_overflow_recepient(card_id, recepient_id);
+}
+
+
+void ops::set_overflow_threshold(const string& token,
+    const double threshold)
+{
+    string card_id = auth::process_token(token);
+    db::set_overflow_threshold(card_id, threshold);
 }

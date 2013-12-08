@@ -30,8 +30,32 @@ namespace auth
     // Exceptions
     struct exception : public std::exception {};
 
-    struct invalid_credentials;
-    struct stale_token;
-    struct invalid_timestamp;
-    struct bad_signature;
+    struct stale_token: auth::exception
+    {
+        virtual const char* what() const noexcept {
+            return "Stale token";
+        }
+    };
+
+    struct invalid_timestamp: auth::exception
+    {
+        virtual const char* what() const noexcept {
+            return "Invalid timestamp";
+        }
+    };
+
+    struct bad_signature: auth::exception
+    {
+        virtual const char* what() const noexcept {
+            return "Bad signature";
+        }
+    };
+
+    struct invalid_credentials: auth::exception
+    {
+        virtual const char* what() const noexcept {
+            return "Invalid credentials";
+        }
+    };
+
 }
