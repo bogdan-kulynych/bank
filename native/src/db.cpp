@@ -223,7 +223,7 @@ db::get_overflow_recepient(const string card_id)
 void
 db::set_overflow_threshold(const string card_id, double threshold) 
 {
-    if (threshold < 0 || threshold < get_available_funds(card_id)) {
+    if (threshold != 0 && (threshold < 0 || threshold < get_available_funds(card_id))) {
         throw invalid_amount();
 
     } else if (!exists(card_id)) {
@@ -244,18 +244,19 @@ db::set_overflow_recepient(const string card_id, const string recepient_id)
 {
     if (!exists(card_id)) {
         throw card_does_not_exist();
-
-    } else if (!exists(recepient_id)) {
+    } else if (recepient_id != "" && !exists(recepient_id)) {
         throw recepient_does_not_exist();
     } else {
         try {
             // Check if there exists a loop
-            auto supplementary = conn->supplementaryRequest(recepient_id);
-            while (supplementary != "") {
-                if (supplementary == card_id) {
-                    throw conflict_supplementary_account();
+            if (recepient_id != "") {
+                auto supplementary = conn->supplementaryRequest(recepient_id);
+                while (supplementary != "") {
+                    if (supplementary == card_id) {
+                        throw conflict_supplementary_account();
+                    }
+                    supplementary = conn->supplementaryRequest(supplementary);
                 }
-                supplementary = conn->supplementaryRequest(supplementary);
             }
 
             return conn->changeSupplCard(card_id, recepient_id);
