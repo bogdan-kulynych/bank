@@ -64,24 +64,79 @@ void get_name(const string& token, const string& card_id) {
 }
 
 
+void set_overflow_recepient(const string& token, const string& recepient_id) {
+    try {
+        ops::set_overflow_recepient(token, recepient_id);
+        cout << "Set Overflow Recepient OK" << endl;
+    } catch (exception& err) {
+        cout << "Set Overflow Recepient ERR: " << err.what() << endl;
+    }   
+}
+
+
+void set_overflow_threshold(const string& token, const double threshold) {
+    try {
+        ops::set_overflow_threshold(token, threshold);
+        cout << "Set Overflow Threshold OK" << endl;
+    } catch (exception& err) {
+        cout << "Set Overflow Threshold ERR: " << err.what() << endl;
+    }   
+}
+
+
+void get_overflow_threshold(const string& token) {
+    try {
+        double res = ops::get_overflow_threshold(token);
+        cout << "Get Overflow Threshold OK: " << res << endl;
+    } catch (exception& err) {
+        cout << "Get Overflow Threshold ERR: " << err.what() << endl;
+    }   
+}
+
+
+void get_overflow_recepient(const string& token) {
+    try {
+        string res = ops::get_overflow_recepient(token);
+        cout << "Get Overflow Recepient OK: " << res << endl;
+    } catch (exception& err) {
+        cout << "Get Overflow Recepient ERR: " << err.what() << endl;
+    }   
+}
+
+
 int main()
 {
     string card_id = "1111111111111111";
+    string card_id1 = "2222222222222222";
+    string card_id2 = "3333333333333333";
     string pin = "1111";
+    string pin1 = "2222";
+    string pin2 = "3333";
 
     auto s = auth::issue_token(card_id, pin);
     cout << s << endl;
     verify(s);
 
     balance(s);
+
+    auto q = auth::issue_token(card_id1, pin1);
+    auto r = auth::issue_token(card_id2, pin2);
+
+    set_overflow_recepient(q, "3333333333333333");
+    set_overflow_threshold(q, 400);
+    get_overflow_recepient(q);
+    get_overflow_threshold(q);
+
     transfer(s, "2222222222222222", 100);
     balance(s);
+    balance(q);
+    balance(r);
 
     transfer(s, "2222222222222222", -100);
     transfer(s, "2222222222222222", 0);
     transfer(s, "2222222222222222", 100000000000);
 
-    withdraw(s, 50);
+    // withdraw(s, 50);
     withdraw(s, 1000000000000);
 
     get_name(s, card_id);

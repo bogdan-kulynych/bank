@@ -125,12 +125,17 @@ void db::make_transfer(const std::string& sender_id,
                 string supplementary = conn->supplementaryRequest(current_recepient);
                 double recepient_available = conn->availableRequest(current_recepient);
 
-                double regular = (max_sum > 0) ? min(max_sum-recepient_available, current_amount)
-                                               : current_amount;
+                double new_sum = recepient_available + current_amount;
+                if (supplementary != "") {
+                    if (new_sum > max_sum) {
+                         current_amount = new_sum - max_sum;
+                         new_sum = max_sum;
+                    } else {
+                        current_amount = 0;
+                    }
+                }
 
-                conn->changeAvailable(recepient_id, recepient_available + regular);
-
-                current_amount -= regular;
+                conn->changeAvailable(current_recepient, new_sum);
                 current_recepient = supplementary;
 
             } while (current_amount > 0);
