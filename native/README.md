@@ -9,7 +9,7 @@ Bank native layer
 Clang 3.2 is used to compile library. To use another compiler, change `binding.gyp` `varibles` section appropriately. C++ dependencies:
 
     libssl-dev
-    lsqlite3
+    libsqlite3-dev
 
 Global node.js dependencies:
 
