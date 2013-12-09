@@ -24,9 +24,15 @@ Bank API Server
 
 It's a RESTful API via HTTPS. Every client is required to have a key / certificate signed with Bank CA certificate. There are *sample SSL certificates* for testing purposes in `ssl` directory.
 
-Every request might get malformed request response
+#### Possible error responses
+
+Malformed request
 
     400 Bad request
+
+Unauthorized error
+
+    401 Unauthorized
 
 
 ### Greeting
@@ -40,6 +46,15 @@ Request:
 Response:
 
     200 OK
+
+Bad or stale token (re-authentication needed):
+
+    401 Unauthorized
+
+Insufficient funds:
+
+    403 Forbidden
+
 
 
 ### Authentication
@@ -67,10 +82,6 @@ Successful response:
         "token": "<API session token>"
     }
 
-Unauthorized error
-
-    401 Unauthorized
-
 
 ### Balance inquiry
 
@@ -89,10 +100,6 @@ Successful response:
         "hold": "<funds on hold>"
     }
 
-Bad or stale token (re-authentication needed):
-
-    401 Unauthorized
-
 
 ### Money withdrawal
 
@@ -109,14 +116,6 @@ Request:
 Successful response:
 
     200 OK
-
-Bad or stale token (re-authentication needed):
-
-    401 Unauthorized
-
-Not sufficient funds:
-
-    403 Forbidden
 
 
 ### Transfer
@@ -136,14 +135,6 @@ Successful response:
 
     200 OK
 
-Unauthorized error:
-
-    401 Unauthorized
-
-Not sufficient funds:
-
-    403 Forbidden
-
 
 ### Overflow
 
@@ -162,10 +153,6 @@ Successful response:
         "threshold": "<Threshold>"
     }
 
-Unauthorized error:
-
-    401 Unauthorized
-
 
 #### Set
 
@@ -181,9 +168,6 @@ Successful response:
 
     200 OK
 
-Unauthorized error:
-
-    401 Unauthorized
 
 #### Clean
 
@@ -193,7 +177,3 @@ Unauthorized error:
 Successful response:
 
     200 OK
-
-Unauthorized error:
-
-    401 Unauthorized
