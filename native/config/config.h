@@ -17,6 +17,6 @@ namespace config
     // Database
     namespace db
     {
-    	const std::string DATABASE_NAME = "dev.db";
+    	const std::string DATABASE_NAME = "/home/bogdan/Classes/MOOP/ATM/atm/server/dev.db";
     }
 }

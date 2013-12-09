@@ -15,7 +15,6 @@ using namespace db;
 #include <string>
 #include <memory>
 #include <exception>
-#include <set>
 using namespace std;
 
 
@@ -118,20 +117,20 @@ void db::make_transfer(const std::string& sender_id,
 
             double current_amount = amount;
             string current_recepient = recepient_id;
-            
+
             // Walking overflow accounts chain
-            do {
+            do { 
                 double max_sum = conn->maxSumRequest(current_recepient);
                 string supplementary = conn->supplementaryRequest(current_recepient);
                 double recepient_available = conn->availableRequest(current_recepient);
 
                 double new_sum = recepient_available + current_amount;
+                current_amount = 0;
+
                 if (supplementary != "") {
                     if (new_sum > max_sum) {
-                         current_amount = new_sum - max_sum;
-                         new_sum = max_sum;
-                    } else {
-                        current_amount = 0;
+                        current_amount = new_sum - max_sum;
+                        new_sum = max_sum;
                     }
                 }
 
@@ -250,10 +249,14 @@ db::set_overflow_recepient(const string card_id, const string recepient_id)
         try {
             // Check if there exists a loop
             if (recepient_id != "") {
+                if (recepient_id == card_id) {
+                    throw conflict();
+                }
+
                 auto supplementary = conn->supplementaryRequest(recepient_id);
                 while (supplementary != "") {
                     if (supplementary == card_id) {
-                        throw conflict_supplementary_account();
+                        throw conflict();
                     }
                     supplementary = conn->supplementaryRequest(supplementary);
                 }

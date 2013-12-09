@@ -114,27 +114,47 @@ int main()
     string pin2 = "3333";
 
     auto s = auth::issue_token(card_id, pin);
-    cout << s << endl;
-    verify(s);
-
-    balance(s);
-
     auto q = auth::issue_token(card_id1, pin1);
     auto r = auth::issue_token(card_id2, pin2);
+    
+    cout << s << endl;
+    verify(s);
+    balance(s);
 
-    set_overflow_recepient(q, "3333333333333333");
-    set_overflow_threshold(q, 400);
+    cout << q << endl;
+    verify(q);
+    balance(q);
+
+    cout << r << endl;
+    verify(r);
+    balance(r);
+
+    cout << endl << "Overflows" << endl << endl;
+
+    set_overflow_recepient(r, "");
+    set_overflow_threshold(r, 0);
+
+    set_overflow_recepient(r, card_id2);
+    set_overflow_recepient(r, card_id1);
+
+    get_overflow_recepient(s);
+    get_overflow_threshold(s);
     get_overflow_recepient(q);
     get_overflow_threshold(q);
+    get_overflow_recepient(r);
+    get_overflow_threshold(r);
 
-    transfer(s, "2222222222222222", 100);
+    cout << endl << "Transfers" << endl << endl;
+
+    // transfer(r, card_id1, 150);
+    transfer(r, card_id1, 250);
     balance(s);
     balance(q);
     balance(r);
 
-    transfer(s, "2222222222222222", -100);
-    transfer(s, "2222222222222222", 0);
-    transfer(s, "2222222222222222", 100000000000);
+    transfer(s, card_id1, -100);
+    transfer(s, card_id1, 0);
+    transfer(s, card_id1, 100000000000);
 
     // withdraw(s, 50);
     withdraw(s, 1000000000000);

@@ -125,7 +125,7 @@ bool db::Manager::existsRequest(const std::string& card) {
     }
     if (SQLITE_ROW != (ret = sqlite3_step(getStmt)))
     {
-        throw sqlite_error("Failed to step select");
+        throw sqlite_error("Failed to step select (exists)");
     }
     std::istringstream hs(reinterpret_cast<const char*>(sqlite3_column_text(getStmt, 0)));
     int count;
@@ -154,7 +154,7 @@ bool db::Manager::authRequest(const std::string& card, const std::string& pin) {
     }
     if (SQLITE_ROW != (ret = sqlite3_step(getSaltStmt)))
     {
-        throw sqlite_error("Failed to step select");
+        throw sqlite_error("Failed to step select (auth)");
     }
     std::string salt = reinterpret_cast<const char*>(sqlite3_column_text(getSaltStmt, 0));
 
@@ -174,7 +174,7 @@ bool db::Manager::authRequest(const std::string& card, const std::string& pin) {
     }
     if (SQLITE_ROW != (ret = sqlite3_step(getHashStmt)))
     {
-        throw sqlite_error("Failed to step select");
+        throw sqlite_error("Failed to step select (auth1)");
     }
     std::string hash_from_db = reinterpret_cast<const char*>(sqlite3_column_text(getHashStmt, 0));
 
@@ -203,7 +203,7 @@ std::string db::Manager::nameRequest(const std::string& card) {
     }
     if (SQLITE_ROW != (ret = sqlite3_step(getNameStmt)))
     {
-        throw sqlite_error("Failed to step select");
+        throw sqlite_error("Failed to step select (name)");
     }
     name = reinterpret_cast<const char*>(sqlite3_column_text(getNameStmt, 0));
     return name;
@@ -224,7 +224,7 @@ double db::Manager::availableRequest(const std::string& card) {
     }
     if (SQLITE_ROW != (ret = sqlite3_step(getAvailableStmt)))
     {
-        throw sqlite_error("Failed to step select");
+        throw sqlite_error("Failed to step select (available)");
     }
 
     std::istringstream as(reinterpret_cast<const char*>(sqlite3_column_text(getAvailableStmt, 0)));
@@ -248,7 +248,7 @@ double db::Manager::holdRequest(const std::string& card) {
     }
     if (SQLITE_ROW != (ret = sqlite3_step(getHoldStmt)))
     {
-        throw sqlite_error("Failed to step select");
+        throw sqlite_error("Failed to step select (hold)");
     }
     std::istringstream hs(reinterpret_cast<const char*>(sqlite3_column_text(getHoldStmt, 0)));
     double hold;
@@ -271,7 +271,7 @@ double db::Manager::maxSumRequest(const std::string& card) {
     }
     if (SQLITE_ROW != (ret = sqlite3_step(getHoldStmt)))
     {
-        throw sqlite_error("Failed to step select");
+        throw sqlite_error("Failed to step select (maxsum)");
     }
     std::istringstream hs(reinterpret_cast<const char*>(sqlite3_column_text(getHoldStmt, 0)));
     double max_sum;
@@ -295,7 +295,7 @@ std::string db::Manager::supplementaryRequest(const std::string& card) {
     }
     if (SQLITE_ROW != (ret = sqlite3_step(getNameStmt)))
     {
-        throw sqlite_error("Failed to step select");
+        throw sqlite_error("Failed to step select (suppl)");
     }
     if (NULL != sqlite3_column_text(getNameStmt, 0)) {
         suppl_card = reinterpret_cast<const char*>(sqlite3_column_text(getNameStmt, 0));

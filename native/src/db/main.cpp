@@ -44,7 +44,7 @@ int main()
     std::cout << "Name: " << m.nameRequest("1111111111111111") << std::endl;
     std::cout << "Available: " << m.availableRequest("1111111111111111") << std::endl;
     std::cout << "Hold: " << m.holdRequest("1111111111111111") << std::endl;
-    m.changeAvailable("2222222222222222", 340);
+    m.changeAvailable("2222222222222222", 300);
     m.changeHold("2222222222222222", 0);
     if (m.supplementaryRequest("1111111111111111") == "") {
         std::cout << "Suppl card: is empty" << std::endl;
@@ -52,7 +52,7 @@ int main()
         std::cout << "Suppl card: " << m.supplementaryRequest("1111111111111111") << std::endl;
     }
     m.changeSupplCard("1111111111111111", "2222222222222222");
-    m.changeMaxSum("1111111111111111", 300);
+    m.changeMaxSum("1111111111111111", 1000);
     if (m.supplementaryRequest("1111111111111111") == "") {
         std::cout << "Suppl card: is empty" << std::endl;
     } else {

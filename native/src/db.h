@@ -94,10 +94,10 @@ namespace db
         }
     };
 
-    struct conflict_supplementary_account : exception
+    struct conflict : exception
     {
         virtual const char* what() const noexcept {
-            return "Adding supplementary account creates conflict situation";
+            return "Operation creates a conflict situation";
         }
     };
 }
