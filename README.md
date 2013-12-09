@@ -34,6 +34,14 @@ Unauthorized error
 
     401 Unauthorized
 
+Bad or stale token (re-authentication needed):
+
+    401 Unauthorized
+
+Insufficient funds:
+
+    403 Forbidden
+    
 
 ### Greeting
 
@@ -46,14 +54,6 @@ Request:
 Response:
 
     200 OK
-
-Bad or stale token (re-authentication needed):
-
-    401 Unauthorized
-
-Insufficient funds:
-
-    403 Forbidden
 
 
 
