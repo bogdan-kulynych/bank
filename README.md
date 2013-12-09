@@ -24,6 +24,10 @@ Bank API Server
 
 It's a RESTful API via HTTPS. Every client is required to have a key / certificate signed with Bank CA certificate. There are *sample SSL certificates* for testing purposes in `ssl` directory.
 
+Every request might get malformed request response
+
+    400 Bad request
+
 
 ### Greeting
 
@@ -66,10 +70,6 @@ Successful response:
 Unauthorized error
 
     401 Unauthorized
-
-Malformed request
-
-    400 Bad request
 
 
 ### Balance inquiry
@@ -147,7 +147,7 @@ Not sufficient funds:
 
 ### Overflow
 
-Get:
+#### Get
 
     GET /api/overflow?token=<API session token>
     Content-Type: application/json
@@ -167,7 +167,7 @@ Unauthorized error:
     401 Unauthorized
 
 
-Set:
+#### Set
 
     POST /api/overflow?token=<API session token>
     Content-Type: application/json
@@ -180,3 +180,20 @@ Set:
 Successful response:
 
     200 OK
+
+Unauthorized error:
+
+    401 Unauthorized
+
+#### Clean
+
+    DELETE /api/overflow?token=<API session token>
+    Content-Type: application/json
+
+Successful response:
+
+    200 OK
+
+Unauthorized error:
+
+    401 Unauthorized
